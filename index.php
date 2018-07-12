@@ -88,6 +88,20 @@ switch ($sortOrder) {
         $sortOrder = 'asc';
         break;
 }
+
+
+if (isset($_GET['sortName'])) {
+    usort($projects, 'rikiuokPagalPavadinima');
+}
+switch ($sortName) {
+    case 'abc':
+        $sortName = 'cba';
+        break;
+    case 'cba':
+        $sortName = 'abc';
+        break;
+}
+
 $sumos = [];
 foreach ($projects as $project) {
     $indeksas = $project['year'];
