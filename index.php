@@ -26,6 +26,31 @@ function rikiuokPagalMetus($elementas1, $elementas2)
     return -1;
 }
 
+
+if (isset($_GET['sortPrice'])) {
+    $sortPrice = $_GET['sortPrice'];
+} else {
+    $sortPrice = '123';
+}
+function rikiuokPagalKaina($elementas1, $elementas2)
+{
+    global $sortPrice;
+    
+    if ($elementas1['price'] == $elementas2['price']) {
+        return 0;
+    }
+    if ($elementas1['price'] < $elementas2['price']) {
+        if ($sortPrice == '123') {
+            return -1;
+        }
+        return 1;
+    }
+        if ($sortPrice == '123') {
+        return 1;
+        }
+        return -1;
+}
+
 if (isset($_GET['sortName'])) {
     $sortName = $_GET['sortName'];
 } else {
@@ -48,6 +73,30 @@ function rikiuokPagalPavadinima($elementasA, $elementasB)
         return 1;
     }
     return -1;
+}
+
+if (isset($_GET['sortProgra'])) {
+    $sortProgra = $_GET['sortProgra'];
+} else {
+    $sortProgra = '123';
+}
+function rikiuokPagalProgramma($elementas1, $elementas2)
+{
+    global $sortProgra;
+    
+    if ($elementas1['program'] == $elementas2['program']) {
+        return 0;
+    }
+    if ($elementas1['program'] < $elementas2['program']) {
+        if ($sortProgra == 'asc') {
+            return -1;
+        }
+        return 1;
+    }
+        if ($sortProgra == 'desc') {
+        return 1;
+        }
+        return -1;
 }
 
 
@@ -89,6 +138,29 @@ switch ($sortOrder) {
         break;
 }
 
+if (isset($_GET['sortProgra'])) {
+    usort($projects, 'rikiuokPagalProgramma');
+}
+switch ($sortProgra) {
+    case 'asc':
+        $sortProgra = 'desc';
+        break;
+    case 'desc':
+        $sortProgra = 'asc';
+        break;
+}
+
+if (isset($_GET['sortPrice'])) {
+    usort($projects, 'rikiuokPagalKaina');
+}
+switch ($sortPrice) {
+    case '123':
+        $sortPrice = '321';
+        break;
+    case '321';
+        $sortPrice = '123';
+        break;
+}
 
 if (isset($_GET['sortName'])) {
     usort($projects, 'rikiuokPagalPavadinima');
@@ -153,9 +225,9 @@ if (isset($_POST['projects'])) {
                   <tr>
                       <th></th>
                       <th><a href="?sortBy=short_name&sortName=<?php echo $sortName; ?>">Sutrumpinimas</a></th></a></th>
-                      <th><a href="?sortBy=year&sortOrder=<?php echo $sortOrder; ?>">Metai</a></th>
-                      <th>Programa</th>
-                      <th>Suma</th>
+                      <th><a href="?sortBy=year&sortOrder=<?php echo $sortOrder; ?>">Metai</a></th>                      
+                      <th><a href="?sortBy=program&sortProgram=<?php echo $sortProgram; ?>">Programma</a></th> 
+                      <th><a href="?sortBy=price&sortPrice=<?php echo $sortPrice; ?>">Suma</a></th>
                   </tr>
                 </thead>
 
